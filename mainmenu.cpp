@@ -28,4 +28,6 @@ void MainMenu::startGame(bool withAlteration, const std::vector<int>& octaveAllo
     NoteFinder *finder = new NoteFinder(octaveAllowed, withAlteration, qobject_cast<MainWindow*>(parent())); 
     MainWindow* mainWin = qobject_cast<MainWindow*>(parent());
     mainWin->setCentralWidget(finder);
+    connect(finder, &NoteFinder::guessedRight, mainWin, &MainWindow::guessedRight);
+    connect(finder, &NoteFinder::guessedWrong, mainWin, &MainWindow::guessedWrong);
 }

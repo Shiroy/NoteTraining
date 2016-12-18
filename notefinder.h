@@ -16,6 +16,10 @@ public:
 
     void randomNote();
 
+signals:
+    void guessedRight();
+    void guessedWrong();
+
 private slots:
     void checkGuess(int guess);
 

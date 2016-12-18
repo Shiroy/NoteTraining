@@ -65,8 +65,10 @@ void NoteFinder::checkGuess(int guess) {
     if(guess == m_note) {
         QSound::play("right.wav");
         randomNote();
+        emit guessedRight();
     } else {
         QSound::play("wrong.wav");
+        emit guessedWrong();
     }
 }
 

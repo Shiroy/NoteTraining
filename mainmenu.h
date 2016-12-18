@@ -15,9 +15,13 @@ public:
 
 private:
     void startGame(bool withAlteration, const std::vector<int>& octaveAllowed);
+    void updateScoreDisplay();
 
 private:
     Ui::MainMenu* ui;
+
+    int m_nbGuessedRight;
+    int m_nbGuessedWrong;
 };
 
 #endif
