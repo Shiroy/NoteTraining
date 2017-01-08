@@ -11,7 +11,7 @@ class NoteFinder : public QWidget
     Q_OBJECT
 
 public:
-    explicit NoteFinder(std::vector<int> allowedOctaves, bool alterationAllowed ,QWidget *parent = 0);
+    explicit NoteFinder(std::vector<int> allowedOctaves, bool alterationAllowed, QWidget *parent = 0, bool withReference = true);
     ~NoteFinder();
 
     void randomNote();

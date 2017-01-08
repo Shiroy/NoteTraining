@@ -8,24 +8,24 @@ MainMenu::MainMenu(QWidget* parent) : QWidget(parent), ui(new Ui::MainMenu) {
     
     //Connect button to start the game
     connect(ui->level1, &QPushButton::clicked, [this](){
-        startGame(false, {5});
+        startGame(false, {5}, true);
     });
     connect(ui->level2, &QPushButton::clicked, [this]() {
-        startGame(true, {5});
+        startGame(true, {5}, true);
     });
     connect(ui->level3, &QPushButton::clicked, [this]() {
-        startGame(false, {2, 3, 4, 5, 6, 7, 8});
+        startGame(false, {2, 3, 4, 5, 6, 7, 8}, true);
     });
     connect(ui->level4, &QPushButton::clicked, [this]() {
-        startGame(true, {2, 3, 4, 5, 6, 7, 8});
+        startGame(true, {2, 3, 4, 5, 6, 7, 8}, true);
     });
-    connect(ui->level4, &QPushButton::clicked, [this]() {
-        startGame(true, {2, 3, 4, 5, 6, 7, 8});
+    connect(ui->level5, &QPushButton::clicked, [this]() {
+        startGame(true, {2, 3, 4, 5, 6, 7, 8}, false);
     });
 }
 
-void MainMenu::startGame(bool withAlteration, const std::vector<int>& octaveAllowed) {
-    NoteFinder *finder = new NoteFinder(octaveAllowed, withAlteration, qobject_cast<MainWindow*>(parent())); 
+void MainMenu::startGame(bool withAlteration, const std::vector<int>& octaveAllowed, bool withReference) {
+    NoteFinder *finder = new NoteFinder(octaveAllowed, withAlteration, qobject_cast<MainWindow*>(parent()), withReference);
     MainWindow* mainWin = qobject_cast<MainWindow*>(parent());
     mainWin->setCentralWidget(finder);
     connect(finder, &NoteFinder::guessedRight, mainWin, &MainWindow::guessedRight);

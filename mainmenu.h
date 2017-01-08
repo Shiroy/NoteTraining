@@ -14,7 +14,7 @@ public:
     MainMenu(QWidget* parent=0);
 
 private:
-    void startGame(bool withAlteration, const std::vector<int>& octaveAllowed);
+    void startGame(bool withAlteration, const std::vector<int>& octaveAllowed, bool withReference);
     void updateScoreDisplay();
 
 private:

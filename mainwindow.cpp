@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "mainmenu.h"
+#include <QAction>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -10,9 +11,10 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    MainMenu* menu = new MainMenu(this);    
-    setCentralWidget(menu);
     updateScoreDisplay();
+
+    connect(ui->newGame, &QAction::triggered, this, &MainWindow::newGame);
+    newGame();
 }
 
 MainWindow::~MainWindow()
@@ -39,3 +41,12 @@ void MainWindow::updateScoreDisplay() {
 
     ui->statusBar->showMessage(newScore);
 }
+
+void MainWindow::newGame() {
+    MainMenu *menu = new MainMenu(this);
+    setCentralWidget(menu);
+    m_nbGuessedRight = 0;
+    m_nbGuessedWrong = 0;
+    updateScoreDisplay();
+}
+

@@ -6,10 +6,13 @@
 #include <algorithm>
 #include <QSound>
 #include <QDebug>
+#include <ctime>
 
-NoteFinder::NoteFinder(std::vector<int> allowedOctaves, bool alterationAllowed, QWidget *parent) :
+NoteFinder::NoteFinder(std::vector<int> allowedOctaves, bool alterationAllowed, QWidget *parent, bool withReference) :
     QWidget(parent), m_allowedOctaves(allowedOctaves), m_currentNoteSound(nullptr)
 {
+    std::srand ( unsigned ( std::time(0) ) );
+
     //Définition des notes autorisees
     if(alterationAllowed) {
         m_allowedNotes = {0,1,2,3,4,5,6,7,8,9,10,11};
@@ -32,12 +35,14 @@ NoteFinder::NoteFinder(std::vector<int> allowedOctaves, bool alterationAllowed, 
         playFile(noteOctave2Filename(m_octave, m_note));
     });
 
-    QPushButton* noteRef = new QPushButton("Jouer la note de référence (Do, C3)", this);
-    lay->addWidget(noteRef);
+    if(withReference) {
+        QPushButton* noteRef = new QPushButton("Jouer la note de référence (Do, C3)", this);
+        lay->addWidget(noteRef);
 
-    connect(noteRef, &QPushButton::clicked, [this](){
-       playFile(noteOctave2Filename(5, 0));
-    });
+        connect(noteRef, &QPushButton::clicked, [this](){
+           playFile(noteOctave2Filename(5, 0));
+        });
+    }
 
     //Creation du groupes de boutons de réponse
     m_answersButton = new QButtonGroup(this);
@@ -74,8 +79,12 @@ void NoteFinder::checkGuess(int guess) {
 
 void NoteFinder::randomNote()
 {
-    std::random_shuffle(m_allowedNotes.begin(), m_allowedNotes.end());
-    std::random_shuffle(m_allowedOctaves.begin(), m_allowedOctaves.end());
+    std::random_shuffle(m_allowedNotes.begin(), m_allowedNotes.end(), [](int i){
+        return std::rand() % i;
+    });
+    std::random_shuffle(m_allowedOctaves.begin(), m_allowedOctaves.end(), [](int i){
+        return std::rand() % i;
+    });
 
     m_octave = *m_allowedOctaves.begin();
     m_note = *m_allowedNotes.begin();

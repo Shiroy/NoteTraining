@@ -18,6 +18,7 @@ public slots:
     void guessedRight();
     void guessedWrong();
     void updateScoreDisplay();
+    void newGame();
 
 private:
     Ui::MainWindow *ui;
